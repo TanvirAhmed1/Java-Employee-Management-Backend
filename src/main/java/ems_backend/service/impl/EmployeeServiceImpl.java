@@ -8,6 +8,8 @@ import ems_backend.repository.EmployeeRepository;
 import ems_backend.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -29,5 +31,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee with id: " + employeeId + " not found"));
 
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        return employees.stream().map(EmployeeMapper::mapToEmployeeDto).toList();
     }
 }
