@@ -1,0 +1,21 @@
+package ems_backend.service.impl;
+
+import ems_backend.dto.EmployeeDto;
+import ems_backend.entity.Employee;
+import ems_backend.mapper.EmployeeMapper;
+import ems_backend.repository.EmployeeRepository;
+import ems_backend.service.EmployeeService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+    private EmployeeRepository employeeRepository;
+    @Override
+    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
+
+        Employee employee = EmployeeMapper.mapToEmployee(employeeDto);
+        Employee savedEmployee = employeeRepository.save(employee);
+        return EmployeeMapper.mapToEmployeeDto(savedEmployee);
+
+    }
+}
